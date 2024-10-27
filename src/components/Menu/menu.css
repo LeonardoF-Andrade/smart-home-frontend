@@ -1,0 +1,54 @@
+.menu-options li button {
+  width: 150px;
+  padding: 10px 20px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #e0e0e0; /* Cor de fundo dos botões */
+  border: 1px solid #000;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.menu-options li button.active {
+  background-color: #698bb8; /* Cor de fundo azul para o botão ativo */
+  color: #ffffff; /* Cor do texto em branco */
+  border-color: #0056b3; /* Cor da borda para o botão ativo */
+}
+
+.menu-options li button:hover {
+  background-color: #d1e8f7; /* Cor de fundo ao passar o mouse */
+  border-color: #333; /* Altera a cor do contorno ao passar o mouse */
+}
+
+.menu {
+  position: fixed; /* Mantém o menu fixo no topo */
+  top: 0;
+  width: 100%;
+  background-color: #a8b0c2;
+  height: 120px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.menu-options {
+  display: flex;
+  list-style: none;
+  gap: 20px; /* Espaço entre os botões */
+}
+
+.menu-options li {
+  display: flex;
+}
+
+.menu-options li .active {
+  background-color: #007bff;
+  color: #ffffff;
+  border-color: #0056b3;
+}

@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: "DynaPuff", system-ui;
+}
+
+.container {
+  /* display: flex; */
+  padding-top: 50px;
+  width: 100vw;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.image-container {
+  padding-top: 50px;
+  width: 100%;
+  overflow: hidden;
+  height: 600px;
+}
+
+.top-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.bottom-bar {
+  width: 100%;
+  height: 400px;
+  background-color: #e4e1e3;
+}
