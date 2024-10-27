@@ -1,17 +1,12 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import HomePage from "./pages/homePage/homePage";
 import LightPage from "./pages/lightPage/iluminacaoPage";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const App = () => {
   const location = useLocation();
-  const [showPage, setShowPage] = useState(true);
+  const [showPage] = useState(true);
 
   return (
     <div className={`page-container ${showPage ? "fade-in" : "fade-out"}`}>
