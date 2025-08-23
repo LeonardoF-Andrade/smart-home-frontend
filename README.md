@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# 🏠 Projeto de Automação Residencial
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório contém o **frontend** do meu **TCC em Engenharia Elétrica**, que tem como objetivo o desenvolvimento de uma **casa automatizada** controlada via **interface web**.  
+A aplicação permite controlar iluminação, portão, varal, porta, janela e sistema de alarme de forma intuitiva e responsiva.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React + TypeScript**
+- **TailwindCSS** para estilização
+- **Shadcn/UI** para componentes de interface
+- **ESP32** (integrado com o backend e hardware real)
+- **API HTTP** para comunicação entre frontend e microcontrolador
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🎨 Interface do Sistema
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 🔹 Tela de Iluminação
+Controle individual ou coletivo das luzes da casa.  
+<img width="1875" height="911" alt="image" src="https://github.com/user-attachments/assets/86ab5c37-312c-45d4-b2e4-9d01fbbf43d9" />
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 🔹 Tela Inicial
+Visão geral da maquete da casa com os controles principais:  
+- Luzes  
+- Portão  
+- Varal  
+- Porta  
+- Janela  
+- Alarme  
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img width="1868" height="922" alt="image" src="https://github.com/user-attachments/assets/1f185e76-c81c-4644-a382-f857ca7110d5" />
+
+
+---
+
+## ⚡ Funcionalidades
+
+- **Controle de Iluminação**: ligar/desligar luzes por cômodo ou todas de uma vez.  
+- **Automação do Varal**: recolhe ou libera automaticamente, incluindo integração com sensor de chuva.  
+- **Abertura/Fechamento de Portão e Porta**: com segurança via sensor de obstáculos.  
+- **Janela Automatizada**: abertura/fechamento controlados.  
+- **Sistema de Alarme**: monitora acessos indevidos e dispara alerta sonoro e mensagem de aviso.  
+- **Monitoramento de Temperatura e Umidade**: integrado com sensor DHT.  
+
+---
+
