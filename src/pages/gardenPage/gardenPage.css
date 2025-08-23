@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Escopo exclusivo para a página Jardim */
+.garden-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* background + overlay idem às outras páginas */
+.garden-page .page-content {
+  position: relative;
+  flex: 1;
+  margin-top: 120px;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+.garden-page .page-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(73, 73, 73, 0.4);
+  z-index: 1;
+}
+
+/* container dos cards em linha */
+.garden-page .main-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  padding: 32px;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+/* estilo genérico de card */
+.garden-page .card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  height: 320px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #92b4e0;
+  opacity: 80%;
+  color: #ffffff;
+}
+.garden-page .card-title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+/* ===== CÍRCULO DE TEMPERATURA ===== */
+.garden-page .circle-wrapper {
+  position: relative;
+  width: calc(2 * 80px + 8px);
+  height: calc(2 * 80px + 8px);
+  margin: 0 auto 16px;
+}
+.garden-page .temp-circle {
+  transform: rotate(-90deg);
+}
+.garden-page .circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+}
+.garden-page .circle-temp {
+  fill: none;
+  stroke: url(#tempGrad);
+  transition: stroke-dashoffset 0.5s ease;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(38, 198, 218, 0.6));
+}
+.garden-page .temp-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+}
+
+/* switch de irrigação */
+.garden-page .toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+.garden-page .switch {
+  width: 50px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.garden-page .switch.on {
+  background: rgba(38, 198, 218, 0.8);
+}
+.garden-page .switch .thumb {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+.garden-page .switch.on .thumb {
+  transform: translateX(22px);
+}
+
+.garden-page .gauge-wrapper {
+  position: relative;
+  width: calc(2 * 80px + 16px); /* RADIUS*2 + STROKE*2 */
+  height: calc(2 * 80px + 16px);
+  margin: 0 auto;
+}
+
+.garden-page .moisture-circle {
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.garden-page .circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+.garden-page .circle-moisture {
+  fill: none;
+  stroke: url(#moistGrad);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+  filter: drop-shadow(0 0 6px rgba(38, 198, 218, 0.6));
+}
+
+.garden-page .moisture-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.garden-page .slider-row {
+  /* margin-top: 16px; */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1rem;
+}
+.garden-page .slider-row input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  outline: none;
+}
+.garden-page .slider-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #26c6da;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(38, 198, 218, 0.7);
+}

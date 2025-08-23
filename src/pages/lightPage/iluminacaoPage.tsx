@@ -1,41 +1,68 @@
 import "./iluminacaoPage.css";
-import cozinhaImage from "../../assets/cozinha.webp";
-import banheiroImage from "../../assets/banheiro.webp";
-import jardimImage from "../../assets/jardim.webp";
-import piscinaImage from "../../assets/piscina.webp";
-import quartoImage from "../../assets/quarto.webp";
-import salaImage from "../../assets/sala.webp";
-import banheiroOn from "../../assets/banheiro_aceso.webp";
-import { useState } from "react";
+import cozinhaOn from "../../assets/cozOn.webp";
+import cozinhaOff from "../../assets/cozOff.webp";
+import banheiroOn from "../../assets/banOn.webp";
+import banheiroOff from "../../assets/banOff.webp";
+import jardimOn from "../../assets/jarOn.webp";
+import jardimOff from "../../assets/jarOff.webp";
+import quartoOn from "../../assets/quartoOn.webp";
+import quartoOff from "../../assets/quartoOff.webp";
+import salaOn from "../../assets/salaOn.webp";
+import salaOff from "../../assets/salaOff.webp";
+import { useEffect, useState } from "react";
 import Menu from "../../components/Menu/menu";
+import bgImage from "../../assets/smart_home.png";
+import VoiceRecognitionListener from "../../components/Voz/voz";
 
-const initialImages: Record<number, { off: string; on: string }> = {
-  1: { off: cozinhaImage, on: cozinhaImage },
-  2: { off: banheiroImage, on: banheiroOn },
-  3: { off: jardimImage, on: jardimImage },
-  4: { off: piscinaImage, on: piscinaImage },
-  5: { off: quartoImage, on: quartoImage },
-  6: { off: salaImage, on: salaImage },
+const initialImages: Record<number, { on: string; off: string }> = {
+  1: { on: quartoOn, off: quartoOff },
+
+  2: { on: salaOn, off: salaOff },
+
+  3: { on: cozinhaOn, off: cozinhaOff },
+
+  4: { on: banheiroOn, off: banheiroOff },
+
+  5: { on: jardimOn, off: jardimOff },
 };
 
-enum IluminacaoAmbientes {
+export enum IluminacaoAmbientes {
   quarto = 1,
   sala = 2,
   cozinha = 3,
   banheiro = 4,
-  piscina = 5,
-  jardim = 6,
+  jardim = 5,
 }
 
+const SMART_HOME_STATUS_KEY = "smartHomeStatus";
+
+const mapSmartHomeStatusToIsOn = (status: any): Record<number, boolean> => ({
+  1: !!status.ledQuarto,
+  2: !!status.ledSala,
+  3: !!status.ledCozinha,
+  4: !!status.ledBanheiro,
+  5: !!status.ledJardim || !!status.ledJardim2,
+});
+
+const getInitialIsOn = (): Record<number, boolean> => {
+  const smartHomeStatus = localStorage.getItem(SMART_HOME_STATUS_KEY);
+  if (smartHomeStatus) {
+    try {
+      const status = JSON.parse(smartHomeStatus);
+      return mapSmartHomeStatusToIsOn(status);
+    } catch {}
+  }
+  return {
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+  };
+};
+
 const LightPage = () => {
-  const [isOn, setIsOn] = useState<Record<number, boolean>>({
-    1: false, // Quarto
-    2: false, // Sala
-    3: false, // Cozinha
-    4: false, // Banheiro
-    5: false, // Piscina
-    6: false, // Jardim
-  });
+  const [isOn, setIsOn] = useState<Record<number, boolean>>(getInitialIsOn);
 
   const handleButtonClick = async (buttonId: number) => {
     try {
@@ -48,11 +75,45 @@ const LightPage = () => {
       );
 
       if (response.ok) {
-        setIsOn((prevIsOn) => ({
-          ...prevIsOn,
-          [buttonId]: !prevIsOn[buttonId],
-        }));
-        console.log("opaaaaa", isOn[buttonId]);
+        setIsOn((prevIsOn) => {
+          const newIsOn = {
+            ...prevIsOn,
+            [buttonId]: !prevIsOn[buttonId],
+          };
+
+          const smartHomeStatusRaw = localStorage.getItem(
+            SMART_HOME_STATUS_KEY
+          );
+          let smartHomeStatus = smartHomeStatusRaw
+            ? JSON.parse(smartHomeStatusRaw)
+            : {};
+
+          switch (buttonId) {
+            case 1:
+              smartHomeStatus.ledQuarto = newIsOn[1] ? 1 : 0;
+              break;
+            case 2:
+              smartHomeStatus.ledSala = newIsOn[2] ? 1 : 0;
+              break;
+            case 3:
+              smartHomeStatus.ledCozinha = newIsOn[3] ? 1 : 0;
+              break;
+            case 4:
+              smartHomeStatus.ledBanheiro = newIsOn[4] ? 1 : 0;
+              break;
+            case 5:
+              smartHomeStatus.ledJardim = newIsOn[5] ? 1 : 0;
+              smartHomeStatus.ledJardim2 = newIsOn[5] ? 1 : 0;
+              break;
+            default:
+              break;
+          }
+          localStorage.setItem(
+            SMART_HOME_STATUS_KEY,
+            JSON.stringify(smartHomeStatus)
+          );
+          return newIsOn;
+        });
         console.log(
           `Requisição para o botão ${IluminacaoAmbientes[buttonId]} foi bem-sucedida.`
         );
@@ -69,13 +130,32 @@ const LightPage = () => {
     }
     return null;
   };
+  useEffect(() => {
+    const onStorage = () => {
+      const smartHomeStatus = localStorage.getItem(SMART_HOME_STATUS_KEY);
+      if (smartHomeStatus) {
+        try {
+          const status = JSON.parse(smartHomeStatus);
+          setIsOn(mapSmartHomeStatusToIsOn(status));
+        } catch {}
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    const interval = setInterval(onStorage, 1000);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="container">
       <Menu />
-      <div className="bottom-bar"></div>
-      <div className="iluminacao-container">
-        {[1, 2, 3, 4, 5, 6].map((buttonId) => (
+      <div
+        className="iluminacao-container"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      >
+        {[1, 2, 3, 4, 5].map((buttonId) => (
           <button
             key={buttonId}
             className="iluminacao-button"
@@ -93,6 +173,7 @@ const LightPage = () => {
           </button>
         ))}
       </div>
+      <VoiceRecognitionListener />
     </div>
   );
 };

@@ -6,38 +6,29 @@
 
 body,
 html {
-  height: 100%;
-  overflow: hidden; /* Remove a rolagem */
-  /* background-color: #050505; */
+  height: 100vh;
+  overflow: hidden;
 }
 
 .iluminacao-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que os itens quebrem em múltiplas linhas */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
   padding: 50px;
   justify-items: center;
-  opacity: 1;
-  height: calc(100vh - 60px);
-  margin-top: -350px;
   box-sizing: border-box;
+  position: relative;
+  margin-top: 70px;
+  background-size: cover;
+  background-position: center;
 }
 
 .iluminacao-container::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(100vh - 120px);
-  margin-top: 120px;
-  background-image: url("../../assets/smart_home.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.5; /* Ajuste a opacidade conforme desejado (0.1 a 1) */
+  inset: 0;
+  background: rgba(73, 73, 73, 0.4);
   z-index: 1;
 }
 
@@ -45,7 +36,7 @@ html {
   z-index: 1;
   flex: 1 1 calc(33.33% - 20px); /* Limita 3 itens por linha, considerando o gap */
   max-width: 500px; /* Limita a largura máxima de cada botão */
-  height: 350px; /* Define uma altura fixa */
+  height: 350px;
   padding: 0;
   border: 2px solid #050505;
   border-radius: 15px;

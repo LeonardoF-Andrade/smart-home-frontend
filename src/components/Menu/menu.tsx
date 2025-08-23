@@ -1,26 +1,25 @@
 import { useState } from "react";
 import "./menu.css";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const Menu = () => {
-  const [activePage, setActivePage] = useState(window.location.pathname); /////OBs:
+  const [activePage, setActivePage] = useState(window.location.pathname);
+  const navigate = useNavigate();
 
-  const handlePageChange = async (page: string) => {
+  const handlePageChange = (page: string) => {
     setActivePage(page);
     navigate(page);
   };
 
-  const navigate = useNavigate();
-
   return (
     <div className="menu">
+      <img src={logo} alt="Logo" className="logo" />
       <ul className="menu-options">
         <li>
           <button
             className={activePage === "/inicio" ? "active" : ""}
-            onClick={() => {
-              handlePageChange("/inicio");
-            }}
+            onClick={() => handlePageChange("/inicio")}
           >
             Início
           </button>
@@ -28,9 +27,7 @@ const Menu = () => {
         <li>
           <button
             className={activePage === "/iluminacao" ? "active" : ""}
-            onClick={async () => {
-              await handlePageChange("/iluminacao");
-            }}
+            onClick={() => handlePageChange("/iluminacao")}
           >
             Iluminação
           </button>
@@ -38,31 +35,17 @@ const Menu = () => {
         <li>
           <button
             className={activePage === "/varal" ? "active" : ""}
-            onClick={() => {
-              handlePageChange("/varal");
-            }}
+            onClick={() => handlePageChange("/varal")}
           >
             Varal
           </button>
         </li>
         <li>
           <button
-            className={activePage === "/portao" ? "active" : ""}
-            onClick={() => {
-              handlePageChange("/portao");
-            }}
+            className={activePage === "/jardim" ? "active" : ""}
+            onClick={() => handlePageChange("/jardim")}
           >
-            Portão
-          </button>
-        </li>
-        <li>
-          <button
-            className={activePage === "/personalizar" ? "active" : ""}
-            onClick={() => {
-              handlePageChange("/personalizar");
-            }}
-          >
-            Personalizar
+            Jardim
           </button>
         </li>
       </ul>
